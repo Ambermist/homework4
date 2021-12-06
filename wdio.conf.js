@@ -7,11 +7,43 @@ exports.config = {
     ],
     automationProtocol: 'webdriver',
     maxInstances: 10,
-    capabilities: [{
-        maxInstances: 5,
-        browserName: 'chrome',
-        acceptInsecureCerts: true
-    }],
+    capabilities: [
+        {
+            'bstack:options': {
+                "osVersion": "15",
+                "deviceName": "iPhone XS",
+                "realMobile": "true",
+                "local": "false",
+                "userName": "polinavoronina_cfjQOb",
+                "accessKey": "2JaR66r68Mg7WqNXYxL4",
+            },
+            "browserName": "iPhone",
+        },
+        {
+            'bstack:options': {
+                "os": "Windows",
+                "osVersion": "10",
+                "local": "false",
+                "seleniumVersion": "3.10.0",
+                "userName": "polinavoronina_cfjQOb",
+                "accessKey": "2JaR66r68Mg7WqNXYxL4",
+            },
+            "browserName": "Firefox",
+            "browserVersion": "latest",
+        },
+        {
+            'bstack:options': {
+                "os": "OS X",
+                "osVersion": "Monterey",
+                "local": "false",
+                "seleniumVersion": "3.5.2",
+                "userName": "polinavoronina_cfjQOb",
+                "accessKey": "2JaR66r68Mg7WqNXYxL4",
+            },
+            "browserName": "Edge",
+            "browserVersion": "latest",
+        }
+    ],
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     logLevel: 'warn',
     bail: 0,
@@ -19,7 +51,10 @@ exports.config = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
-    services: ['chromedriver'],
+    host: 'hub.browserstack.com',
+    user: 'polinavoronina_cfjQOb',
+    key: '2JaR66r68Mg7WqNXYxL4',
+    services: [['browserstack', {}], ['chromedriver']],
 
     framework: 'mocha',
     //
@@ -57,8 +92,10 @@ exports.config = {
      * @param {Object} config wdio configuration object
      * @param {Array.<Object>} capabilities list of capabilities details
      */
-    // onPrepare: function (config, capabilities) {
-    // },
+    onPrepare: function (config, capabilities) {
+        const fsExtra = require('fs-extra');
+        fsExtra.emptyDirSync('./screenshots');
+    },
     /**
      * Gets executed before a worker process is spawned and can be used to initialise specific service
      * for that worker as well as modify runtime environments in an async fashion.
@@ -130,9 +167,14 @@ exports.config = {
      * @param {Object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
     afterTest: async function (test, context, { error, result, duration, passed, retries }) {
-        if (!passed) {
-            await browser.takeScreenshot();
-        }
+        // if (!passed) {
+        //     await browser.takeScreenshot();
+        // }
+        const date = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateFormatted = date.toLocaleDateString('en-GB', options).replace(/ /g,"_");
+        const testTitle = test.title.replace(/ /g,"_");
+        await browser.saveScreenshot(`./screenshots/${dateFormatted}_${testTitle}.png`);
     },
 
     /**
@@ -184,4 +226,6 @@ exports.config = {
      */
     //onReload: function(oldSessionId, newSessionId) {
     //}
+    
 }
+
