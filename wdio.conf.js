@@ -7,6 +7,10 @@ exports.config = {
     ],
     automationProtocol: 'webdriver',
     maxInstances: 10,
+    commonCapabilities: {
+        name: 'parallel_test',
+        build: 'browserstack-build-1'
+      },
     capabilities: [
         {
             'bstack:options': {

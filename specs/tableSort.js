@@ -66,7 +66,7 @@ describe('Check app', function () {
         it('Check Age ascending order', async function () {
             const idCells = await $$('//*[@tabulator-field="age" and @class="tabulator-cell"]');
             const idCellsValues = await Promise.all(idCells.map(async (cell) => { return parseInt(await cell.getText(), 10) }));
-            const idCellsSortedAsc = idCellsValues.sort((a, b) => (a - b));
+            const idCellsSortedAsc = Array.from(idCellsValues).sort((a, b) => (a - b));
             const idSortButton = await $('//*[@tabulator-field="age" and @role="columnheader"]');
             await idSortButton.click();
             await browser.pause(1000);
@@ -77,7 +77,7 @@ describe('Check app', function () {
         it('Check Age descending order', async function () {
             const idCells = await $$('//*[@tabulator-field="age" and @class="tabulator-cell"]');
             const idCellsValues = await Promise.all(idCells.map(async (cell) => { return parseInt(await cell.getText(), 10) }));            
-            const idCellsSortedDesc = idCellsValues.sort((a, b) => (b - a));
+            const idCellsSortedDesc = Array.from(idCellsValues).sort((a, b) => (b - a));
             const idSortButton = await $('//*[@tabulator-field="age" and @role="columnheader"]');
             await idSortButton.click();
             await browser.pause(1000);
