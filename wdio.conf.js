@@ -7,47 +7,11 @@ exports.config = {
     ],
     automationProtocol: 'webdriver',
     maxInstances: 10,
-    commonCapabilities: {
-        name: 'parallel_test',
-        build: 'browserstack-build-1'
-      },
-    capabilities: [
-        {
-            'bstack:options': {
-                "osVersion": "15",
-                "deviceName": "iPhone XS",
-                "realMobile": "true",
-                "local": "false",
-                "userName": "polinavoronina_cfjQOb",
-                "accessKey": "2JaR66r68Mg7WqNXYxL4",
-            },
-            "browserName": "iPhone",
-        },
-        {
-            'bstack:options': {
-                "os": "Windows",
-                "osVersion": "10",
-                "local": "false",
-                "seleniumVersion": "3.10.0",
-                "userName": "polinavoronina_cfjQOb",
-                "accessKey": "2JaR66r68Mg7WqNXYxL4",
-            },
-            "browserName": "Firefox",
-            "browserVersion": "latest",
-        },
-        {
-            'bstack:options': {
-                "os": "OS X",
-                "osVersion": "Monterey",
-                "local": "false",
-                "seleniumVersion": "3.5.2",
-                "userName": "polinavoronina_cfjQOb",
-                "accessKey": "2JaR66r68Mg7WqNXYxL4",
-            },
-            "browserName": "Edge",
-            "browserVersion": "latest",
-        }
-    ],
+    capabilities: [{
+        maxInstances: 5,
+        browserName: 'chrome',
+        acceptInsecureCerts: true
+    }],
     // Level of logging verbosity: trace | debug | info | warn | error | silent
     logLevel: 'warn',
     bail: 0,
@@ -55,10 +19,7 @@ exports.config = {
     waitforTimeout: 10000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
-    host: 'hub.browserstack.com',
-    user: 'polinavoronina_cfjQOb',
-    key: '2JaR66r68Mg7WqNXYxL4',
-    services: [['browserstack', {}], ['chromedriver']],
+    services: ['chromedriver'],
 
     framework: 'mocha',
     //

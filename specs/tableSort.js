@@ -1,5 +1,5 @@
-describe('Check app', function () {
-    before('user should login', async function () {
+describe('Check app', function () {    
+    before('user login', async function () {
         await browser.url('https://viktor-silakov.github.io/course-sut');
         await $('#login').setValue('walker@jw.com');
         await $('#password').setValue('password');
@@ -18,6 +18,7 @@ describe('Check app', function () {
             const idSortButton = await $('//*[@tabulator-field="id" and @role="columnheader"]');
             await idSortButton.click();
             await browser.pause(1000);
+            expect(await idSortButton.getAttribute('aria-sort')).toEqual('asc');            
             const idCellsA = await $$('//*[@tabulator-field="id" and @class="tabulator-cell"]');
             const idCellsValuesA = await Promise.all(idCellsA.map(async (cell)=>{return parseInt(await cell.getText(), 10)}));
             expect(idCellsValuesA).toEqual(idCellsSortedAsc);
@@ -29,6 +30,7 @@ describe('Check app', function () {
             const idSortButton = await $('//*[@tabulator-field="id" and @role="columnheader"]');
             await idSortButton.click();
             await browser.pause(1000);
+            expect(await idSortButton.getAttribute('aria-sort')).toEqual('desc');
             const idCellsD = await $$('//*[@tabulator-field="id" and @class="tabulator-cell"]');
             const idCellsValuesD = await Promise.all(idCellsD.map(async (cell)=>{return parseInt(await cell.getText(), 10)}));
             expect(idCellsValuesD).toEqual(idCellsSortedDesc);
@@ -44,6 +46,7 @@ describe('Check app', function () {
             const idSortButton = await $('//*[@tabulator-field="name" and @role="columnheader"]');
             await idSortButton.click();
             await browser.pause(1000);
+            expect(await idSortButton.getAttribute('aria-sort')).toEqual('asc');
             const idCellsA = await $$('//*[@tabulator-field="name" and @class="tabulator-cell"]');
             const idCellsValuesA = await Promise.all(idCellsA.map(async (cell)=>{return await cell.getText()}));
             expect(idCellsValuesA).toEqual(idCellsSortedAsc);
@@ -55,6 +58,7 @@ describe('Check app', function () {
             const idSortButton = await $('//*[@tabulator-field="name" and @role="columnheader"]');
             await idSortButton.click();
             await browser.pause(1000);
+            expect(await idSortButton.getAttribute('aria-sort')).toEqual('desc');
             const idCellsD = await $$('//*[@tabulator-field="name" and @class="tabulator-cell"]');
             const idCellsValuesD = await Promise.all(idCellsD.map(async (cell)=>{return await cell.getText()}));
             expect(idCellsValuesD).toEqual(idCellsSortedDesc);
@@ -70,6 +74,7 @@ describe('Check app', function () {
             const idSortButton = await $('//*[@tabulator-field="age" and @role="columnheader"]');
             await idSortButton.click();
             await browser.pause(1000);
+            expect(await idSortButton.getAttribute('aria-sort')).toEqual('asc');
             const idCellsA = await $$('//*[@tabulator-field="age" and @class="tabulator-cell"]');
             const idCellsValuesA = await Promise.all(idCellsA.map(async (cell)=>{return parseInt(await cell.getText(), 10)}));
             expect(idCellsValuesA).toEqual(idCellsSortedAsc);
@@ -81,6 +86,7 @@ describe('Check app', function () {
             const idSortButton = await $('//*[@tabulator-field="age" and @role="columnheader"]');
             await idSortButton.click();
             await browser.pause(1000);
+            expect(await idSortButton.getAttribute('aria-sort')).toEqual('desc');
             const idCellsD = await $$('//*[@tabulator-field="age" and @class="tabulator-cell"]');
             const idCellsValuesD = await Promise.all(idCellsD.map(async (cell)=>{return parseInt(await cell.getText(), 10)}));
             expect(idCellsValuesD).toEqual(idCellsSortedDesc);
